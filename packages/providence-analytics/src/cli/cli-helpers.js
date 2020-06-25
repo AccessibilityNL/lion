@@ -29,16 +29,11 @@ function setQueryMethod(m) {
  * @returns {string[]}
  */
 function pathsArrayFromCs(t) {
-  return t
-    .split(',')
-    .map(t => {
-      const isGlob = t.includes('*');
-      if (isGlob) {
-        return glob.sync(t);
-      }
-      return pathLib.resolve(process.cwd(), t.trim());
-    })
-    .flat();
+  const isGlob = t.includes('*');
+  if (isGlob) {
+    return glob.sync(t);
+  }
+  return t.split(',').map(t => pathLib.resolve(process.cwd(), t.trim()));
 }
 
 /**
